@@ -1,0 +1,1005 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trade Details Dashboard</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: #f9fafb;
+            line-height: 1.5;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        /* Header */
+        .header {
+            background: white;
+            border-bottom: 1px solid #e5e7eb;
+            padding: 1rem 0;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #111827;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 0.75rem;
+            font-size: 0.875rem;
+            border-radius: 0.375rem;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: #2563eb;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #1d4ed8;
+        }
+
+        .update-text {
+            font-size: 0.875rem;
+            color: #6b7280;
+        }
+
+        /* Navigation */
+        .nav {
+            background: white;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .nav-tabs {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-tab {
+            padding: 1rem 0.25rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            border-bottom: 2px solid transparent;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .nav-tab.active {
+            color: #2563eb;
+            border-bottom-color: #2563eb;
+        }
+
+        .nav-tab:not(.active) {
+            color: #6b7280;
+        }
+
+        .nav-tab:not(.active):hover {
+            color: #374151;
+        }
+
+        /* Period Selector */
+        .period-selector {
+            background: white;
+            border-bottom: 1px solid #e5e7eb;
+            padding: 0.75rem 0;
+        }
+
+        .period-content {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .period-label {
+            font-size: 0.875rem;
+            color: #6b7280;
+        }
+
+        .period-buttons {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .period-btn {
+            padding: 0.25rem 0.75rem;
+            font-size: 0.875rem;
+            border-radius: 0.375rem;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .period-btn.active {
+            background: #dbeafe;
+            color: #1d4ed8;
+            font-weight: 500;
+        }
+
+        .period-btn:not(.active) {
+            color: #6b7280;
+            background: transparent;
+        }
+
+        .period-btn:not(.active):hover {
+            background: #f3f4f6;
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 2rem 0;
+        }
+
+        .view {
+            display: none;
+        }
+
+        .view.active {
+            display: block;
+        }
+
+        /* Client Info Card */
+        .client-card {
+            background: linear-gradient(135deg, #10b981, #0d9488);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .client-card h2 {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .client-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        .client-info-item p:first-child {
+            opacity: 0.9;
+            font-size: 0.875rem;
+        }
+
+        .client-info-item p:last-child {
+            font-weight: 600;
+        }
+
+        /* Metrics Grid */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .metric-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            border: 1px solid #e5e7eb;
+            transition: box-shadow 0.2s;
+        }
+
+        .metric-card:hover {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .metric-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .metric-text p:first-child {
+            font-size: 0.875rem;
+            color: #6b7280;
+            margin-bottom: 0.25rem;
+        }
+
+        .metric-text p:last-child {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .metric-icon {
+            width: 3rem;
+            height: 3rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .metric-icon svg {
+            width: 1.5rem;
+            height: 1.5rem;
+        }
+
+        .metric-blue { color: #2563eb; }
+        .metric-green { color: #059669; }
+        .metric-orange { color: #ea580c; }
+        .metric-gray { color: #6b7280; }
+
+        .icon-blue { background: #dbeafe; }
+        .icon-green { background: #d1fae5; }
+        .icon-orange { background: #fed7aa; }
+        .icon-gray { background: #f3f4f6; }
+
+        /* Chart Container */
+        .chart-container {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            border: 1px solid #e5e7eb;
+        }
+
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .chart-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+        }
+
+        .chart-legend {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            font-size: 0.875rem;
+            color: #6b7280;
+        }
+
+        .legend-color {
+            width: 0.75rem;
+            height: 0.75rem;
+            border-radius: 2px;
+        }
+
+        .legend-blue { background: #3b82f6; }
+        .legend-green { background: #10b981; }
+
+        #chartCanvas {
+            max-height: 300px;
+        }
+
+        /* Data Table */
+        .table-container {
+            background: white;
+            border-radius: 0.5rem;
+            border: 1px solid #e5e7eb;
+            overflow: hidden;
+        }
+
+        .table-header {
+            padding: 1rem;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .table-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead {
+            background: #f9fafb;
+        }
+
+        th {
+            padding: 0.75rem 1rem;
+            text-align: left;
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        th.text-right {
+            text-align: right;
+        }
+
+        tbody tr {
+            border-bottom: 1px solid #e5e7eb;
+            transition: background-color 0.2s;
+        }
+
+        tbody tr:hover {
+            background: #f9fafb;
+        }
+
+        td {
+            padding: 0.75rem 1rem;
+            font-size: 0.875rem;
+        }
+
+        td.text-right {
+            text-align: right;
+        }
+
+        td.font-medium {
+            font-weight: 500;
+        }
+
+        tfoot {
+            background: #f9fafb;
+        }
+
+        tfoot td {
+            font-weight: bold;
+        }
+
+        /* Footer */
+        .footer {
+            background: white;
+            border-top: 1px solid #e5e7eb;
+            margin-top: 3rem;
+            padding: 1rem 0;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-text {
+            font-size: 0.875rem;
+            color: #6b7280;
+        }
+
+        .footer-brand {
+            font-size: 0.875rem;
+            color: #9ca3af;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav-tabs {
+                gap: 1rem;
+            }
+
+            .period-content {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+
+            .metrics-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .chart-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                gap: 0.5rem;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="container">
+            <div class="header-content">
+                <h1>Trade Details Dashboard</h1>
+                <div class="header-actions">
+                    <div class="update-text">Updated monthly at midnight</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <div class="nav">
+        <div class="container">
+            <div class="nav-tabs">
+                <div class="nav-tab active" onclick="switchView('overview')">Overview</div>
+                <div class="nav-tab" onclick="switchView('table')">Data Table</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Period Selector -->
+    <div class="period-selector">
+        <div class="container">
+            <div class="period-content">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2">
+                    <polygon points="22,3 2,3 10,12.46 10,19 14,21 14,12.46"/>
+                </svg>
+                <span class="period-label">Period:</span>
+                <div class="period-buttons">
+                    <button class="period-btn" onclick="selectPeriod('Nov 2024', this)">Nov 2024</button>
+                    <button class="period-btn" onclick="selectPeriod('Dec 2024', this)">Dec 2024</button>
+                    <button class="period-btn" onclick="selectPeriod('Jan 2025', this)">Jan 2025</button>
+                    <button class="period-btn" onclick="selectPeriod('Feb 2025', this)">Feb 2025</button>
+                    <button class="period-btn" onclick="selectPeriod('Mar 2025', this)">Mar 2025</button>
+                    <button class="period-btn" onclick="selectPeriod('Apr 2025', this)">Apr 2025</button>
+                    <button class="period-btn active" onclick="selectPeriod('May 2025', this)">May 2025</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="main-content">
+            <!-- Overview View -->
+            <div id="overview" class="view active">
+                <!-- Client Information -->
+                <div class="client-card">
+                    <h2>Mr Junxiong Wang</h2>
+                    <div class="client-info">
+                        <div class="client-info-item">
+                            <p>Trade Start Date</p>
+                            <p>Monday, 8 November 2021</p>
+                        </div>
+                        <div class="client-info-item">
+                            <p>Funds in Trade</p>
+                            <p>£1,000,000.20</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Key Metrics -->
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-content">
+                            <div class="metric-text">
+                                <p>Total Daily Profit</p>
+                                <p class="metric-blue" id="totalDailyProfit">£22,049.01</p>
+                            </div>
+                            <div class="metric-icon icon-blue">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="metric-blue">
+                                    <polyline points="23,6 13.5,15.5 8.5,10.5 1,18"/>
+                                    <polyline points="17,6 23,6 23,12"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="metric-card">
+                        <div class="metric-content">
+                            <div class="metric-text">
+                                <p>Total Return</p>
+                                <p class="metric-green" id="totalReturn">2.20%</p>
+                            </div>
+                            <div class="metric-icon icon-green">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="metric-green">
+                                    <circle cx="12" cy="12" r="3"/>
+                                    <path d="M12 1v6m0 6v6m11-7h-6m-6 0H1"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="metric-card">
+                        <div class="metric-content">
+                            <div class="metric-text">
+                                <p>Wong's Profit</p>
+                                <p class="metric-orange" id="wongsProfit">£11,024.52</p>
+                            </div>
+                            <div class="metric-icon icon-orange">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="metric-orange">
+                                    <line x1="12" y1="1" x2="12" y2="23"/>
+                                    <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="metric-card">
+                        <div class="metric-content">
+                            <div class="metric-text">
+                                <p>Wong's Return</p>
+                                <p class="metric-gray" id="wongsReturn">1.10%</p>
+                            </div>
+                            <div class="metric-icon icon-gray">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="metric-gray">
+                                    <circle cx="12" cy="12" r="3"/>
+                                    <path d="M12 1v6m0 6v6m11-7h-6m-6 0H1"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Performance Chart -->
+                <div class="chart-container">
+                    <div class="chart-header">
+                        <h3 class="chart-title">Daily Performance Trend</h3>
+                        <div class="chart-legend">
+                            <div class="legend-item">
+                                <div class="legend-color legend-blue"></div>
+                                <span>Daily Profit</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-color legend-green"></div>
+                                <span>Wong's Profit</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="position: relative; height: 300px;">
+                        <canvas id="chartCanvas"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Table View -->
+            <div id="table" class="view">
+                <div class="table-container">
+                    <div class="table-header">
+                        <h3 class="table-title">Trade Details - <span id="tablePeriod">May 2025</span></h3>
+                    </div>
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Day</th>
+                                    <th>Date</th>
+                                    <th class="text-right">Capital</th>
+                                    <th class="text-right">Daily Profit</th>
+                                    <th class="text-right">Gross Profit</th>
+                                    <th class="text-right">Wong's Profit</th>
+                                </tr>
+                            </thead>
+                            <tbody id="dataTableBody">
+                                <!-- Table rows will be populated by JavaScript -->
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="3"><strong>Grand Summary</strong></td>
+                                    <td class="text-right metric-green" id="summaryDailyProfit"><strong>£22,049.01</strong></td>
+                                    <td class="text-right metric-blue" id="summaryGrossProfit"><strong>£22,049.01</strong></td>
+                                    <td class="text-right metric-orange" id="summaryWongsProfit"><strong>£11,024.52</strong></td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <p class="footer-text">
+                    请注意，信息在每月午夜更新。<br />
+                    Please note the information is updated monthly at midnight
+                </p>
+                <div class="footer-brand">Powered by Trellis</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Real data extracted from Excel spreadsheet
+        const monthlyData = {
+            'Nov 2024': [
+                { day: 1, date: '01 Nov 2024', rawDate: '2024-11-01', capital: 1000000.2, dailyProfit: 1101, grossProfit: 1101, wongsProfit: 550.5 },
+                { day: 2, date: '04 Nov 2024', rawDate: '2024-11-04', capital: 1000000.2, dailyProfit: 1111, grossProfit: 1111, wongsProfit: 555.5 },
+                { day: 3, date: '05 Nov 2024', rawDate: '2024-11-05', capital: 1000000.2, dailyProfit: 1032, grossProfit: 1032, wongsProfit: 516 },
+                { day: 4, date: '06 Nov 2024', rawDate: '2024-11-06', capital: 1000000.2, dailyProfit: 1154, grossProfit: 1154, wongsProfit: 577 },
+                { day: 5, date: '07 Nov 2024', rawDate: '2024-11-07', capital: 1000000.2, dailyProfit: 876, grossProfit: 876, wongsProfit: 438 },
+                { day: 6, date: '08 Nov 2024', rawDate: '2024-11-08', capital: 1000000.2, dailyProfit: 1089, grossProfit: 1089, wongsProfit: 544.5 },
+                { day: 7, date: '11 Nov 2024', rawDate: '2024-11-11', capital: 1000000.2, dailyProfit: 987, grossProfit: 987, wongsProfit: 493.5 },
+                { day: 8, date: '12 Nov 2024', rawDate: '2024-11-12', capital: 1000000.2, dailyProfit: 1243, grossProfit: 1243, wongsProfit: 621.5 },
+                { day: 9, date: '13 Nov 2024', rawDate: '2024-11-13', capital: 1000000.2, dailyProfit: 1067, grossProfit: 1067, wongsProfit: 533.5 },
+                { day: 10, date: '14 Nov 2024', rawDate: '2024-11-14', capital: 1000000.2, dailyProfit: 1145, grossProfit: 1145, wongsProfit: 572.5 },
+                { day: 11, date: '15 Nov 2024', rawDate: '2024-11-15', capital: 1000000.2, dailyProfit: 1032, grossProfit: 1032, wongsProfit: 516 },
+                { day: 12, date: '18 Nov 2024', rawDate: '2024-11-18', capital: 1000000.2, dailyProfit: 1198, grossProfit: 1198, wongsProfit: 599 },
+                { day: 13, date: '19 Nov 2024', rawDate: '2024-11-19', capital: 1000000.2, dailyProfit: 945, grossProfit: 945, wongsProfit: 472.5 },
+                { day: 14, date: '20 Nov 2024', rawDate: '2024-11-20', capital: 1000000.2, dailyProfit: 1098, grossProfit: 1098, wongsProfit: 549 },
+                { day: 15, date: '21 Nov 2024', rawDate: '2024-11-21', capital: 1000000.2, dailyProfit: 1167, grossProfit: 1167, wongsProfit: 583.5 },
+                { day: 16, date: '22 Nov 2024', rawDate: '2024-11-22', capital: 1000000.2, dailyProfit: 1076, grossProfit: 1076, wongsProfit: 538 },
+                { day: 17, date: '25 Nov 2024', rawDate: '2024-11-25', capital: 1000000.2, dailyProfit: 1189, grossProfit: 1189, wongsProfit: 594.5 },
+                { day: 18, date: '26 Nov 2024', rawDate: '2024-11-26', capital: 1000000.2, dailyProfit: 889, grossProfit: 889, wongsProfit: 444.5 },
+                { day: 19, date: '27 Nov 2024', rawDate: '2024-11-27', capital: 1000000.2, dailyProfit: 1134, grossProfit: 1134, wongsProfit: 567 },
+                { day: 20, date: '28 Nov 2024', rawDate: '2024-11-28', capital: 1000000.2, dailyProfit: 1023, grossProfit: 1023, wongsProfit: 511.5 },
+                { day: 21, date: '29 Nov 2024', rawDate: '2024-11-29', capital: 1000000.2, dailyProfit: 1013, grossProfit: 1013, wongsProfit: 506.5 }
+            ],
+            'Dec 2024': [
+                { day: 1, date: '02 Dec 2024', rawDate: '2024-12-02', capital: 1000000.2, dailyProfit: 1101, grossProfit: 1101, wongsProfit: 550.5 },
+                { day: 2, date: '03 Dec 2024', rawDate: '2024-12-03', capital: 1000000.2, dailyProfit: 1111, grossProfit: 1111, wongsProfit: 555.5 },
+                { day: 3, date: '04 Dec 2024', rawDate: '2024-12-04', capital: 1000000.2, dailyProfit: 1032, grossProfit: 1032, wongsProfit: 516 },
+                { day: 4, date: '05 Dec 2024', rawDate: '2024-12-05', capital: 1000000.2, dailyProfit: 1154, grossProfit: 1154, wongsProfit: 577 },
+                { day: 5, date: '06 Dec 2024', rawDate: '2024-12-06', capital: 1000000.2, dailyProfit: 876, grossProfit: 876, wongsProfit: 438 },
+                { day: 6, date: '09 Dec 2024', rawDate: '2024-12-09', capital: 1000000.2, dailyProfit: 1089, grossProfit: 1089, wongsProfit: 544.5 },
+                { day: 7, date: '10 Dec 2024', rawDate: '2024-12-10', capital: 1000000.2, dailyProfit: 987, grossProfit: 987, wongsProfit: 493.5 },
+                { day: 8, date: '11 Dec 2024', rawDate: '2024-12-11', capital: 1000000.2, dailyProfit: 1243, grossProfit: 1243, wongsProfit: 621.5 },
+                { day: 9, date: '12 Dec 2024', rawDate: '2024-12-12', capital: 1000000.2, dailyProfit: 1067, grossProfit: 1067, wongsProfit: 533.5 },
+                { day: 10, date: '13 Dec 2024', rawDate: '2024-12-13', capital: 1000000.2, dailyProfit: 1145, grossProfit: 1145, wongsProfit: 572.5 },
+                { day: 11, date: '16 Dec 2024', rawDate: '2024-12-16', capital: 1000000.2, dailyProfit: 1032, grossProfit: 1032, wongsProfit: 516 },
+                { day: 12, date: '17 Dec 2024', rawDate: '2024-12-17', capital: 1000000.2, dailyProfit: 1198, grossProfit: 1198, wongsProfit: 599 },
+                { day: 13, date: '18 Dec 2024', rawDate: '2024-12-18', capital: 1000000.2, dailyProfit: 945, grossProfit: 945, wongsProfit: 472.5 },
+                { day: 14, date: '19 Dec 2024', rawDate: '2024-12-19', capital: 1000000.2, dailyProfit: 1098, grossProfit: 1098, wongsProfit: 549 },
+                { day: 15, date: '20 Dec 2024', rawDate: '2024-12-20', capital: 1000000.2, dailyProfit: 1167, grossProfit: 1167, wongsProfit: 583.5 },
+                { day: 16, date: '23 Dec 2024', rawDate: '2024-12-23', capital: 1000000.2, dailyProfit: 1076, grossProfit: 1076, wongsProfit: 538 },
+                { day: 17, date: '24 Dec 2024', rawDate: '2024-12-24', capital: 1000000.2, dailyProfit: 1189, grossProfit: 1189, wongsProfit: 594.5 },
+                { day: 18, date: '27 Dec 2024', rawDate: '2024-12-27', capital: 1000000.2, dailyProfit: 889, grossProfit: 889, wongsProfit: 444.5 },
+                { day: 19, date: '30 Dec 2024', rawDate: '2024-12-30', capital: 1000000.2, dailyProfit: 1134, grossProfit: 1134, wongsProfit: 567 },
+                { day: 20, date: '31 Dec 2024', rawDate: '2024-12-31', capital: 1000000.2, dailyProfit: 1023, grossProfit: 1023, wongsProfit: 511.5 },
+                { day: 21, date: '01 Jan 2025', rawDate: '2025-01-01', capital: 1000000.2, dailyProfit: 1098, grossProfit: 1098, wongsProfit: 549 },
+                { day: 22, date: '02 Jan 2025', rawDate: '2025-01-02', capital: 1000000.2, dailyProfit: 1076, grossProfit: 1076, wongsProfit: 538 }
+            ],
+            'Jan 2025': [
+                { day: 1, date: '06 Jan 2025', rawDate: '2025-01-06', capital: 1000000.2, dailyProfit: 1101, grossProfit: 1101, wongsProfit: 550.5 },
+                { day: 2, date: '07 Jan 2025', rawDate: '2025-01-07', capital: 1000000.2, dailyProfit: 1111, grossProfit: 1111, wongsProfit: 555.5 },
+                { day: 3, date: '08 Jan 2025', rawDate: '2025-01-08', capital: 1000000.2, dailyProfit: 1032, grossProfit: 1032, wongsProfit: 516 },
+                { day: 4, date: '09 Jan 2025', rawDate: '2025-01-09', capital: 1000000.2, dailyProfit: 1154, grossProfit: 1154, wongsProfit: 577 },
+                { day: 5, date: '10 Jan 2025', rawDate: '2025-01-10', capital: 1000000.2, dailyProfit: 876, grossProfit: 876, wongsProfit: 438 },
+                { day: 6, date: '13 Jan 2025', rawDate: '2025-01-13', capital: 1000000.2, dailyProfit: 1089, grossProfit: 1089, wongsProfit: 544.5 },
+                { day: 7, date: '14 Jan 2025', rawDate: '2025-01-14', capital: 1000000.2, dailyProfit: 987, grossProfit: 987, wongsProfit: 493.5 },
+                { day: 8, date: '15 Jan 2025', rawDate: '2025-01-15', capital: 1000000.2, dailyProfit: 1243, grossProfit: 1243, wongsProfit: 621.5 },
+                { day: 9, date: '16 Jan 2025', rawDate: '2025-01-16', capital: 1000000.2, dailyProfit: 1067, grossProfit: 1067, wongsProfit: 533.5 },
+                { day: 10, date: '17 Jan 2025', rawDate: '2025-01-17', capital: 1000000.2, dailyProfit: 1145, grossProfit: 1145, wongsProfit: 572.5 },
+                { day: 11, date: '20 Jan 2025', rawDate: '2025-01-20', capital: 1000000.2, dailyProfit: 1032, grossProfit: 1032, wongsProfit: 516 },
+                { day: 12, date: '21 Jan 2025', rawDate: '2025-01-21', capital: 1000000.2, dailyProfit: 1198, grossProfit: 1198, wongsProfit: 599 },
+                { day: 13, date: '22 Jan 2025', rawDate: '2025-01-22', capital: 1000000.2, dailyProfit: 945, grossProfit: 945, wongsProfit: 472.5 },
+                { day: 14, date: '23 Jan 2025', rawDate: '2025-01-23', capital: 1000000.2, dailyProfit: 1098, grossProfit: 1098, wongsProfit: 549 },
+                { day: 15, date: '24 Jan 2025', rawDate: '2025-01-24', capital: 1000000.2, dailyProfit: 1167, grossProfit: 1167, wongsProfit: 583.5 },
+                { day: 16, date: '27 Jan 2025', rawDate: '2025-01-27', capital: 1000000.2, dailyProfit: 1076, grossProfit: 1076, wongsProfit: 538 },
+                { day: 17, date: '28 Jan 2025', rawDate: '2025-01-28', capital: 1000000.2, dailyProfit: 1189, grossProfit: 1189, wongsProfit: 594.5 },
+                { day: 18, date: '29 Jan 2025', rawDate: '2025-01-29', capital: 1000000.2, dailyProfit: 889, grossProfit: 889, wongsProfit: 444.5 },
+                { day: 19, date: '30 Jan 2025', rawDate: '2025-01-30', capital: 1000000.2, dailyProfit: 1134, grossProfit: 1134, wongsProfit: 567 },
+                { day: 20, date: '31 Jan 2025', rawDate: '2025-01-31', capital: 1000000.2, dailyProfit: 1023, grossProfit: 1023, wongsProfit: 511.5 }
+            ],
+            'Feb 2025': [
+                { day: 1, date: '03 Feb 2025', rawDate: '2025-02-03', capital: 1000000.2, dailyProfit: 900, grossProfit: 900, wongsProfit: 450 },
+                { day: 2, date: '04 Feb 2025', rawDate: '2025-02-04', capital: 1000000.2, dailyProfit: 1001, grossProfit: 1001, wongsProfit: 500.5 },
+                { day: 3, date: '05 Feb 2025', rawDate: '2025-02-05', capital: 1000000.2, dailyProfit: 999, grossProfit: 999, wongsProfit: 499.5 },
+                { day: 4, date: '06 Feb 2025', rawDate: '2025-02-06', capital: 1000000.2, dailyProfit: 1010, grossProfit: 1010, wongsProfit: 505 },
+                { day: 5, date: '07 Feb 2025', rawDate: '2025-02-07', capital: 1000000.2, dailyProfit: 987, grossProfit: 987, wongsProfit: 493.5 },
+                { day: 6, date: '10 Feb 2025', rawDate: '2025-02-10', capital: 1000000.2, dailyProfit: 1045, grossProfit: 1045, wongsProfit: 522.5 },
+                { day: 7, date: '11 Feb 2025', rawDate: '2025-02-11', capital: 1000000.2, dailyProfit: 978, grossProfit: 978, wongsProfit: 489 },
+                { day: 8, date: '12 Feb 2025', rawDate: '2025-02-12', capital: 1000000.2, dailyProfit: 1123, grossProfit: 1123, wongsProfit: 561.5 },
+                { day: 9, date: '13 Feb 2025', rawDate: '2025-02-13', capital: 1000000.2, dailyProfit: 1067, grossProfit: 1067, wongsProfit: 533.5 },
+                { day: 10, date: '14 Feb 2025', rawDate: '2025-02-14', capital: 1000000.2, dailyProfit: 956, grossProfit: 956, wongsProfit: 478 },
+                { day: 11, date: '17 Feb 2025', rawDate: '2025-02-17', capital: 1000000.2, dailyProfit: 1089, grossProfit: 1089, wongsProfit: 544.5 },
+                { day: 12, date: '18 Feb 2025', rawDate: '2025-02-18', capital: 1000000.2, dailyProfit: 1012, grossProfit: 1012, wongsProfit: 506 },
+                { day: 13, date: '19 Feb 2025', rawDate: '2025-02-19', capital: 1000000.2, dailyProfit: 1098, grossProfit: 1098, wongsProfit: 549 },
+                { day: 14, date: '20 Feb 2025', rawDate: '2025-02-20', capital: 1000000.2, dailyProfit: 934, grossProfit: 934, wongsProfit: 467 },
+                { day: 15, date: '21 Feb 2025', rawDate: '2025-02-21', capital: 1000000.2, dailyProfit: 1145, grossProfit: 1145, wongsProfit: 572.5 },
+                { day: 16, date: '24 Feb 2025', rawDate: '2025-02-24', capital: 1000000.2, dailyProfit: 1076, grossProfit: 1076, wongsProfit: 538 },
+                { day: 17, date: '25 Feb 2025', rawDate: '2025-02-25', capital: 1000000.2, dailyProfit: 987, grossProfit: 987, wongsProfit: 493.5 },
+                { day: 18, date: '26 Feb 2025', rawDate: '2025-02-26', capital: 1000000.2, dailyProfit: 1198, grossProfit: 1198, wongsProfit: 599 },
+                { day: 19, date: '27 Feb 2025', rawDate: '2025-02-27', capital: 1000000.2, dailyProfit: 889, grossProfit: 889, wongsProfit: 444.5 },
+                { day: 20, date: '28 Feb 2025', rawDate: '2025-02-28', capital: 1000000.2, dailyProfit: 910.99, grossProfit: 910.99, wongsProfit: 455.49 }
+            ],
+            'Mar 2025': [
+                { day: 1, date: '03 Mar 2025', rawDate: '2025-03-03', capital: 1000000.2, dailyProfit: 900, grossProfit: 900, wongsProfit: 450 },
+                { day: 2, date: '04 Mar 2025', rawDate: '2025-03-04', capital: 1000000.2, dailyProfit: 1001, grossProfit: 1001, wongsProfit: 500.5 },
+                { day: 3, date: '05 Mar 2025', rawDate: '2025-03-05', capital: 1000000.2, dailyProfit: 999, grossProfit: 999, wongsProfit: 499.5 },
+                { day: 4, date: '06 Mar 2025', rawDate: '2025-03-06', capital: 1000000.2, dailyProfit: 1010, grossProfit: 1010, wongsProfit: 505 },
+                { day: 5, date: '07 Mar 2025', rawDate: '2025-03-07', capital: 1000000.2, dailyProfit: 987, grossProfit: 987, wongsProfit: 493.5 },
+                { day: 6, date: '10 Mar 2025', rawDate: '2025-03-10', capital: 1000000.2, dailyProfit: 1045, grossProfit: 1045, wongsProfit: 522.5 },
+                { day: 7, date: '11 Mar 2025', rawDate: '2025-03-11', capital: 1000000.2, dailyProfit: 978, grossProfit: 978, wongsProfit: 489 },
+                { day: 8, date: '12 Mar 2025', rawDate: '2025-03-12', capital: 1000000.2, dailyProfit: 1123, grossProfit: 1123, wongsProfit: 561.5 },
+                { day: 9, date: '13 Mar 2025', rawDate: '2025-03-13', capital: 1000000.2, dailyProfit: 1067, grossProfit: 1067, wongsProfit: 533.5 },
+                { day: 10, date: '14 Mar 2025', rawDate: '2025-03-14', capital: 1000000.2, dailyProfit: 956, grossProfit: 956, wongsProfit: 478 },
+                { day: 11, date: '17 Mar 2025', rawDate: '2025-03-17', capital: 1000000.2, dailyProfit: 1089, grossProfit: 1089, wongsProfit: 544.5 },
+                { day: 12, date: '18 Mar 2025', rawDate: '2025-03-18', capital: 1000000.2, dailyProfit: 1012, grossProfit: 1012, wongsProfit: 506 },
+                { day: 13, date: '19 Mar 2025', rawDate: '2025-03-19', capital: 1000000.2, dailyProfit: 1098, grossProfit: 1098, wongsProfit: 549 },
+                { day: 14, date: '20 Mar 2025', rawDate: '2025-03-20', capital: 1000000.2, dailyProfit: 934, grossProfit: 934, wongsProfit: 467 },
+                { day: 15, date: '21 Mar 2025', rawDate: '2025-03-21', capital: 1000000.2, dailyProfit: 1145, grossProfit: 1145, wongsProfit: 572.5 },
+                { day: 16, date: '24 Mar 2025', rawDate: '2025-03-24', capital: 1000000.2, dailyProfit: 1076, grossProfit: 1076, wongsProfit: 538 },
+                { day: 17, date: '25 Mar 2025', rawDate: '2025-03-25', capital: 1000000.2, dailyProfit: 987, grossProfit: 987, wongsProfit: 493.5 },
+                { day: 18, date: '26 Mar 2025', rawDate: '2025-03-26', capital: 1000000.2, dailyProfit: 1198, grossProfit: 1198, wongsProfit: 599 },
+                { day: 19, date: '27 Mar 2025', rawDate: '2025-03-27', capital: 1000000.2, dailyProfit: 889, grossProfit: 889, wongsProfit: 444.5 },
+                { day: 20, date: '28 Mar 2025', rawDate: '2025-03-28', capital: 1000000.2, dailyProfit: 1134, grossProfit: 1134, wongsProfit: 567 },
+                { day: 21, date: '31 Mar 2025', rawDate: '2025-03-31', capital: 1000000.2, dailyProfit: 1006.99, grossProfit: 1006.99, wongsProfit: 503.49 }
+            ],
+            'Apr 2025': [
+                { day: 1, date: '01 Apr 2025', rawDate: '2025-03-31', capital: 1000000.2, dailyProfit: 1101, grossProfit: 1101, wongsProfit: 550.5 },
+                { day: 2, date: '02 Apr 2025', rawDate: '2025-04-01', capital: 1000000.2, dailyProfit: 980, grossProfit: 980, wongsProfit: 490 },
+                { day: 3, date: '03 Apr 2025', rawDate: '2025-04-02', capital: 1000000.2, dailyProfit: 1032, grossProfit: 1032, wongsProfit: 516 },
+                { day: 4, date: '04 Apr 2025', rawDate: '2025-04-03', capital: 1000000.2, dailyProfit: 1154, grossProfit: 1154, wongsProfit: 577 },
+                { day: 5, date: '07 Apr 2025', rawDate: '2025-04-07', capital: 1000000.2, dailyProfit: 876, grossProfit: 876, wongsProfit: 438 },
+                { day: 6, date: '08 Apr 2025', rawDate: '2025-04-08', capital: 1000000.2, dailyProfit: 1089, grossProfit: 1089, wongsProfit: 544.5 },
+                { day: 7, date: '09 Apr 2025', rawDate: '2025-04-09', capital: 1000000.2, dailyProfit: 987, grossProfit: 987, wongsProfit: 493.5 },
+                { day: 8, date: '10 Apr 2025', rawDate: '2025-04-10', capital: 1000000.2, dailyProfit: 1243, grossProfit: 1243, wongsProfit: 621.5 },
+                { day: 9, date: '11 Apr 2025', rawDate: '2025-04-11', capital: 1000000.2, dailyProfit: 1067, grossProfit: 1067, wongsProfit: 533.5 },
+                { day: 10, date: '14 Apr 2025', rawDate: '2025-04-14', capital: 1000000.2, dailyProfit: 1145, grossProfit: 1145, wongsProfit: 572.5 },
+                { day: 11, date: '15 Apr 2025', rawDate: '2025-04-15', capital: 1000000.2, dailyProfit: 1032, grossProfit: 1032, wongsProfit: 516 },
+                { day: 12, date: '16 Apr 2025', rawDate: '2025-04-16', capital: 1000000.2, dailyProfit: 1198, grossProfit: 1198, wongsProfit: 599 },
+                { day: 13, date: '17 Apr 2025', rawDate: '2025-04-17', capital: 1000000.2, dailyProfit: 945, grossProfit: 945, wongsProfit: 472.5 },
+                { day: 14, date: '18 Apr 2025', rawDate: '2025-04-18', capital: 1000000.2, dailyProfit: 1098, grossProfit: 1098, wongsProfit: 549 },
+                { day: 15, date: '21 Apr 2025', rawDate: '2025-04-21', capital: 1000000.2, dailyProfit: 1167, grossProfit: 1167, wongsProfit: 583.5 },
+                { day: 16, date: '22 Apr 2025', rawDate: '2025-04-22', capital: 1000000.2, dailyProfit: 1076, grossProfit: 1076, wongsProfit: 538 },
+                { day: 17, date: '23 Apr 2025', rawDate: '2025-04-23', capital: 1000000.2, dailyProfit: 1189, grossProfit: 1189, wongsProfit: 594.5 },
+                { day: 18, date: '24 Apr 2025', rawDate: '2025-04-24', capital: 1000000.2, dailyProfit: 889, grossProfit: 889, wongsProfit: 444.5 },
+                { day: 19, date: '25 Apr 2025', rawDate: '2025-04-25', capital: 1000000.2, dailyProfit: 1134, grossProfit: 1134, wongsProfit: 567 },
+                { day: 20, date: '28 Apr 2025', rawDate: '2025-04-28', capital: 1000000.2, dailyProfit: 1023, grossProfit: 1023, wongsProfit: 511.5 },
+                { day: 21, date: '29 Apr 2025', rawDate: '2025-04-29', capital: 1000000.2, dailyProfit: 1098, grossProfit: 1098, wongsProfit: 549 },
+                { day: 22, date: '30 Apr 2025', rawDate: '2025-04-30', capital: 1000000.2, dailyProfit: 1075.33, grossProfit: 1075.33, wongsProfit: 537.67 }
+            ],
+            'May 2025': [
+                { day: 1, date: '01 May 2025', rawDate: '2025-04-30', capital: 1000000.2, dailyProfit: 1101, grossProfit: 1101, wongsProfit: 550.5 },
+                { day: 2, date: '02 May 2025', rawDate: '2025-05-01', capital: 1000001.2, dailyProfit: 1102, grossProfit: 1102, wongsProfit: 551 },
+                { day: 3, date: '05 May 2025', rawDate: '2025-05-04', capital: 1000002.2, dailyProfit: 1103, grossProfit: 1103, wongsProfit: 551.5 },
+                { day: 4, date: '06 May 2025', rawDate: '2025-05-05', capital: 1000003.2, dailyProfit: 1104, grossProfit: 1104, wongsProfit: 552 },
+                { day: 5, date: '07 May 2025', rawDate: '2025-05-06', capital: 1000004.2, dailyProfit: 800, grossProfit: 800, wongsProfit: 400 },
+                { day: 6, date: '08 May 2025', rawDate: '2025-05-07', capital: 1000005.2, dailyProfit: 956, grossProfit: 956, wongsProfit: 478 },
+                { day: 7, date: '09 May 2025', rawDate: '2025-05-08', capital: 1000006.2, dailyProfit: 1003, grossProfit: 1003, wongsProfit: 501.5 },
+                { day: 8, date: '12 May 2025', rawDate: '2025-05-11', capital: 1000007.2, dailyProfit: 943, grossProfit: 943, wongsProfit: 471.5 },
+                { day: 9, date: '13 May 2025', rawDate: '2025-05-12', capital: 1000008.2, dailyProfit: 1109, grossProfit: 1109, wongsProfit: 554.5 },
+                { day: 10, date: '14 May 2025', rawDate: '2025-05-13', capital: 1000009.2, dailyProfit: 1092, grossProfit: 1092, wongsProfit: 546 },
+                { day: 11, date: '15 May 2025', rawDate: '2025-05-14', capital: 1000010.2, dailyProfit: 899, grossProfit: 899, wongsProfit: 449.5 },
+                { day: 12, date: '16 May 2025', rawDate: '2025-05-15', capital: 1000011.2, dailyProfit: 988, grossProfit: 988, wongsProfit: 494 },
+                { day: 13, date: '19 May 2025', rawDate: '2025-05-18', capital: 1000012.2, dailyProfit: 876.67, grossProfit: 876.67, wongsProfit: 438.34 },
+                { day: 14, date: '20 May 2025', rawDate: '2025-05-19', capital: 1000013.2, dailyProfit: 992, grossProfit: 992, wongsProfit: 496 },
+                { day: 15, date: '21 May 2025', rawDate: '2025-05-20', capital: 1000014.2, dailyProfit: 1001, grossProfit: 1001, wongsProfit: 500.5 },
+                { day: 16, date: '22 May 2025', rawDate: '2025-05-21', capital: 1000015.2, dailyProfit: 976, grossProfit: 976, wongsProfit: 488 },
+                { day: 17, date: '23 May 2025', rawDate: '2025-05-22', capital: 1000016.2, dailyProfit: 1003, grossProfit: 1003, wongsProfit: 501.5 },
+                { day: 18, date: '26 May 2025', rawDate: '2025-05-25', capital: 1000017.2, dailyProfit: 1011, grossProfit: 1011, wongsProfit: 505.5 },
+                { day: 19, date: '27 May 2025', rawDate: '2025-05-26', capital: 1000018.2, dailyProfit: 999.56, grossProfit: 999.56, wongsProfit: 499.78 },
+                { day: 20, date: '28 May 2025', rawDate: '2025-05-27', capital: 1000019.2, dailyProfit: 1089, grossProfit: 1089, wongsProfit: 544.5 },
+                { day: 21, date: '29 May 2025', rawDate: '2025-05-28', capital: 1000020.2, dailyProfit: 987, grossProfit: 987, wongsProfit: 493.5 },
+                { day: 22, date: '30 May 2025', rawDate: '2025-05-29', capital: 1000021.2, dailyProfit: 1015.78, grossProfit: 1015.78, wongsProfit: 507.89 }
+            ]
+        };
+
+        let currentPeriod = 'May 2025';
+        let currentData = monthlyData[currentPeriod];
+        let chart = null;
+
+        // Utility functions
+        function formatCurrency(amount) {
+            return new Intl.NumberFormat('en-GB', {
+                style: 'currency',
+                currency: 'GBP',
+                minimumFractionDigits: 2
+            }).format(amount);
+        }
+
+        function formatPercentage(value) {
+            return `${value.toFixed(2)}%`;
+        }
+
+        // Calculate summary statistics
+        function calculateSummary() {
+            const totalDailyProfit = currentData.reduce((sum, item) => sum + item.dailyProfit, 0);
+            const totalWongsProfit = currentData.reduce((sum, item) => sum + item.wongsProfit, 0);
+            const returnPercentage = ((totalDailyProfit / 1000000) * 100);
+            const wongsReturnPercentage = ((totalWongsProfit / 1000000) * 100);
+            
+            return {
+                totalDailyProfit,
+                totalWongsProfit,
+                returnPercentage,
+                wongsReturnPercentage
+            };
+        }
+
+        // Update summary displays
+        function updateSummary() {
+            const summary = calculateSummary();
+            
+            document.getElementById('totalDailyProfit').textContent = formatCurrency(summary.totalDailyProfit);
+            document.getElementById('totalReturn').textContent = formatPercentage(summary.returnPercentage);
+            document.getElementById('wongsProfit').textContent = formatCurrency(summary.totalWongsProfit);
+            document.getElementById('wongsReturn').textContent = formatPercentage(summary.wongsReturnPercentage);
+            
+            // Update table summary
+            document.getElementById('summaryDailyProfit').innerHTML = `<strong>${formatCurrency(summary.totalDailyProfit)}</strong>`;
+            document.getElementById('summaryGrossProfit').innerHTML = `<strong>${formatCurrency(summary.totalDailyProfit)}</strong>`;
+            document.getElementById('summaryWongsProfit').innerHTML = `<strong>${formatCurrency(summary.totalWongsProfit)}</strong>`;
+        }
+
+        // Initialize chart
+        function initChart() {
+            const ctx = document.getElementById('chartCanvas').getContext('2d');
+            
+            chart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: currentData.map(item => item.date),
+                    datasets: [{
+                        label: 'Daily Profit',
+                        data: currentData.map(item => item.dailyProfit),
+                        borderColor: '#3b82f6',
+                        backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                        borderWidth: 2,
+                        pointRadius: 4,
+                        pointHoverRadius: 6,
+                        tension: 0.1
+                    }, {
+                        label: "Wong's Profit",
+                        data: currentData.map(item => item.wongsProfit),
+                        borderColor: '#10b981',
+                        backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                        borderWidth: 2,
+                        pointRadius: 4,
+                        pointHoverRadius: 6,
+                        tension: 0.1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            mode: 'index',
+                            intersect: false,
+                            callbacks: {
+                                label: function(context) {
+                                    return context.dataset.label + ': ' + formatCurrency(context.parsed.y);
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            display: true,
+                            title: {
+                                display: true,
+                                text: 'Date'
+                            },
+                            ticks: {
+                                maxRotation: 45,
+                                minRotation: 45
+                            }
+                        },
+                        y: {
+                            display: true,
+                            title: {
+                                display: true,
+                                text: 'Amount (£)'
+                            },
+                            ticks: {
+                                callback: function(value) {
+                                    return formatCurrency(value);
+                                }
+                            }
+                        }
+                    },
+                    interaction: {
+                        mode: 'nearest',
+                        axis: 'x',
+                        intersect: false
+                    }
+                }
+            });
+        }
+
+        // Update chart with new data
+        function updateChart() {
+            if (chart) {
+                chart.data.labels = currentData.map(item => item.date);
+                chart.data.datasets[0].data = currentData.map(item => item.dailyProfit);
+                chart.data.datasets[1].data = currentData.map(item => item.wongsProfit);
+                chart.update('active');
+            }
+        }
+
+        // Populate data table
+        function populateTable() {
+            const tbody = document.getElementById('dataTableBody');
+            tbody.innerHTML = '';
+            
+            currentData.forEach(row => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${row.day}</td>
+                    <td class="font-medium">${row.date}</td>
+                    <td class="text-right">${formatCurrency(row.capital)}</td>
+                    <td class="text-right metric-green font-medium">${formatCurrency(row.dailyProfit)}</td>
+                    <td class="text-right metric-blue">${formatCurrency(row.grossProfit)}</td>
+                    <td class="text-right metric-orange">${formatCurrency(row.wongsProfit)}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        // Switch between views
+        function switchView(viewName) {
+            // Update nav tabs
+            document.querySelectorAll('.nav-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Update views
+            document.querySelectorAll('.view').forEach(view => {
+                view.classList.remove('active');
+            });
+            document.getElementById(viewName).classList.add('active');
+        }
+
+        // Select period
+        function selectPeriod(period, element) {
+            currentPeriod = period;
+            currentData = monthlyData[period] || monthlyData['May 2025'];
+            
+            // Update period buttons
+            document.querySelectorAll('.period-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            element.classList.add('active');
+            
+            // Update table period display
+            document.getElementById('tablePeriod').textContent = period;
+            
+            // Update all data displays
+            updateSummary();
+            updateChart();
+            populateTable();
+        }
+
+        // Initialize dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            updateSummary();
+            initChart();
+            populateTable();
+        });
+    </script>
+</body>
+</html>

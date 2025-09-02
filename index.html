@@ -508,7 +508,8 @@
                     <button class="period-btn" onclick="selectPeriod('Apr 2025', this)">Apr 2025</button>
                     <button class="period-btn" onclick="selectPeriod('May 2025', this)">May 2025</button>
                     <button class="period-btn" onclick="selectPeriod('Jun 2025', this)">Jun 2025</button>
-                    <button class="period-btn active" onclick="selectPeriod('Jul 2025', this)">Jul 2025</button>
+                    <button class="period-btn" onclick="selectPeriod('Jul 2025', this)">Jul 2025</button>
+                    <button class="period-btn active" onclick="selectPeriod('Aug 2025', this)">Aug 2025</button>
                 </div>
                 <div class="period-dropdown">
                     <select onchange="selectPeriodFromDropdown(this)" id="periodSelect">
@@ -520,7 +521,8 @@
                         <option value="Apr 2025">Apr 2025</option>
                         <option value="May 2025">May 2025</option>
                         <option value="Jun 2025">Jun 2025</option>
-                        <option value="Jul 2025" selected>Jul 2025</option>
+                        <option value="Jul 2025">Jul 2025</option>
+                        <option value="Aug 2025" selected>Aug 2025</option>
                     </select>
                 </div>
             </div>
@@ -635,7 +637,7 @@
             <div id="table" class="view">
                 <div class="table-container">
                     <div class="table-header">
-                        <h3 class="table-title">Trade Details - <span id="tablePeriod">Jul 2025</span></h3>
+                        <h3 class="table-title">Trade Details - <span id="tablePeriod">Aug 2025</span></h3>
                     </div>
                     <div class="table-wrapper">
                         <table>
@@ -892,10 +894,33 @@
                 { day: 21, date: '29 Jul 2025', rawDate: '2025-07-29', capital: 1000000.2, dailyProfit: 989, grossProfit: 989, wongsProfit: 494.5 },
                 { day: 22, date: '30 Jul 2025', rawDate: '2025-07-30', capital: 1000000.2, dailyProfit: 1003, grossProfit: 1003, wongsProfit: 501.5 },
                 { day: 23, date: '31 Jul 2025', rawDate: '2025-07-31', capital: 1000000.2, dailyProfit: 902, grossProfit: 902, wongsProfit: 451 }
+            ],
+            'Aug 2025': [
+                { day: 1, date: '01 Aug 2025', rawDate: '2025-08-01', capital: 1000000.2, dailyProfit: 900, grossProfit: 900, wongsProfit: 450 },
+                { day: 2, date: '04 Aug 2025', rawDate: '2025-08-04', capital: 1000000.2, dailyProfit: 850, grossProfit: 850, wongsProfit: 425 },
+                { day: 3, date: '05 Aug 2025', rawDate: '2025-08-05', capital: 1000000.2, dailyProfit: 989, grossProfit: 989, wongsProfit: 494.5 },
+                { day: 4, date: '06 Aug 2025', rawDate: '2025-08-06', capital: 1000000.2, dailyProfit: 1001, grossProfit: 1001, wongsProfit: 500.5 },
+                { day: 5, date: '07 Aug 2025', rawDate: '2025-08-07', capital: 1000000.2, dailyProfit: 999, grossProfit: 999, wongsProfit: 499.5 },
+                { day: 6, date: '08 Aug 2025', rawDate: '2025-08-08', capital: 1000000.2, dailyProfit: 987, grossProfit: 987, wongsProfit: 493.5 },
+                { day: 7, date: '11 Aug 2025', rawDate: '2025-08-11', capital: 1000000.2, dailyProfit: 898, grossProfit: 898, wongsProfit: 449 },
+                { day: 8, date: '12 Aug 2025', rawDate: '2025-08-12', capital: 1000000.2, dailyProfit: 999, grossProfit: 999, wongsProfit: 499.5 },
+                { day: 9, date: '13 Aug 2025', rawDate: '2025-08-13', capital: 1000000.2, dailyProfit: 1001, grossProfit: 1001, wongsProfit: 500.5 },
+                { day: 10, date: '14 Aug 2025', rawDate: '2025-08-14', capital: 1000000.2, dailyProfit: 1000, grossProfit: 1000, wongsProfit: 500 },
+                { day: 11, date: '15 Aug 2025', rawDate: '2025-08-15', capital: 1000000.2, dailyProfit: 986, grossProfit: 986, wongsProfit: 493 },
+                { day: 12, date: '18 Aug 2025', rawDate: '2025-08-18', capital: 1000000.2, dailyProfit: 878, grossProfit: 878, wongsProfit: 439 },
+                { day: 13, date: '19 Aug 2025', rawDate: '2025-08-19', capital: 1000000.2, dailyProfit: 979, grossProfit: 979, wongsProfit: 489.5 },
+                { day: 14, date: '20 Aug 2025', rawDate: '2025-08-20', capital: 1000000.2, dailyProfit: 998, grossProfit: 998, wongsProfit: 499 },
+                { day: 15, date: '21 Aug 2025', rawDate: '2025-08-21', capital: 1000000.2, dailyProfit: 987, grossProfit: 987, wongsProfit: 493.5 },
+                { day: 16, date: '22 Aug 2025', rawDate: '2025-08-22', capital: 1000000.2, dailyProfit: 923, grossProfit: 923, wongsProfit: 461.5 },
+                { day: 17, date: '25 Aug 2025', rawDate: '2025-08-25', capital: 1000000.2, dailyProfit: 1023, grossProfit: 1023, wongsProfit: 511.5 },
+                { day: 18, date: '26 Aug 2025', rawDate: '2025-08-26', capital: 1000000.2, dailyProfit: 892, grossProfit: 892, wongsProfit: 446 },
+                { day: 19, date: '27 Aug 2025', rawDate: '2025-08-27', capital: 1000000.2, dailyProfit: 973, grossProfit: 973, wongsProfit: 486.5 },
+                { day: 20, date: '28 Aug 2025', rawDate: '2025-08-28', capital: 1000000.2, dailyProfit: 901, grossProfit: 901, wongsProfit: 450.5 },
+                { day: 21, date: '29 Aug 2025', rawDate: '2025-08-29', capital: 1000000.2, dailyProfit: 989, grossProfit: 989, wongsProfit: 494.5 }
             ]
         };
 
-        let currentPeriod = 'Jul 2025';
+        let currentPeriod = 'Aug 2025';
         let currentData = monthlyData[currentPeriod];
         let chart = null;
 
@@ -1069,7 +1094,7 @@
         function selectPeriodFromDropdown(selectElement) {
             const period = selectElement.value;
             currentPeriod = period;
-            currentData = monthlyData[period] || monthlyData['Jul 2025'];
+            currentData = monthlyData[period] || monthlyData['Aug 2025'];
             
             // Update button states to keep in sync
             document.querySelectorAll('.period-btn').forEach(btn => {
@@ -1091,7 +1116,7 @@
         // Select period from buttons (desktop)
         function selectPeriod(period, element) {
             currentPeriod = period;
-            currentData = monthlyData[period] || monthlyData['Jul 2025'];
+            currentData = monthlyData[period] || monthlyData['Aug 2025'];
             
             // Update period buttons
             document.querySelectorAll('.period-btn').forEach(btn => {

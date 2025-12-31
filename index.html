@@ -512,7 +512,8 @@
                     <button class="period-btn" onclick="selectPeriod('Aug 2025', this)">Aug 2025</button>
                     <button class="period-btn" onclick="selectPeriod('Sep 2025', this)">Sep 2025</button>
                     <button class="period-btn" onclick="selectPeriod('Oct 2025', this)">Oct 2025</button>
-                    <button class="period-btn active" onclick="selectPeriod('Nov 2025', this)">Nov 2025</button>
+                    <button class="period-btn" onclick="selectPeriod('Nov 2025', this)">Nov 2025</button>
+                    <button class="period-btn active" onclick="selectPeriod('Dec 2025', this)">Dec 2025</button>
                 </div>
                 <div class="period-dropdown">
                     <select onchange="selectPeriodFromDropdown(this)" id="periodSelect">
@@ -528,7 +529,8 @@
                         <option value="Aug 2025">Aug 2025</option>
                         <option value="Sep 2025">Sep 2025</option>
                         <option value="Oct 2025">Oct 2025</option>
-                        <option value="Nov 2025" selected>Nov 2025</option>
+                        <option value="Nov 2025">Nov 2025</option>
+                        <option value="Dec 2025" selected>Dec 2025</option>
                     </select>
                 </div>
             </div>
@@ -561,7 +563,7 @@
                         <div class="metric-content">
                             <div class="metric-text">
                                 <p>Total Daily Profit</p>
-                                <p class="metric-blue" id="totalDailyProfit">£17,747.00</p>
+                                <p class="metric-blue" id="totalDailyProfit">£17,789.00</p>
                             </div>
                             <div class="metric-icon icon-blue">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="metric-blue">
@@ -576,7 +578,7 @@
                         <div class="metric-content">
                             <div class="metric-text">
                                 <p>Total Return</p>
-                                <p class="metric-green" id="totalReturn">1.77%</p>
+                                <p class="metric-green" id="totalReturn">1.78%</p>
                             </div>
                             <div class="metric-icon icon-green">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="metric-green">
@@ -591,7 +593,7 @@
                         <div class="metric-content">
                             <div class="metric-text">
                                 <p>Wong's Profit</p>
-                                <p class="metric-orange" id="wongsProfit">£8,873.50</p>
+                                <p class="metric-orange" id="wongsProfit">£8,894.50</p>
                             </div>
                             <div class="metric-icon icon-orange">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="metric-orange">
@@ -643,7 +645,7 @@
             <div id="table" class="view">
                 <div class="table-container">
                     <div class="table-header">
-                        <h3 class="table-title">Trade Details - <span id="tablePeriod">Nov 2025</span></h3>
+                        <h3 class="table-title">Trade Details - <span id="tablePeriod">Dec 2025</span></h3>
                     </div>
                     <div class="table-wrapper">
                         <table>
@@ -663,9 +665,9 @@
                             <tfoot>
                                 <tr>
                                     <td colspan="3"><strong>Grand Summary</strong></td>
-                                    <td class="text-right metric-green" id="summaryDailyProfit"><strong>£17,747.00</strong></td>
-                                    <td class="text-right metric-blue" id="summaryGrossProfit"><strong>£17,747.00</strong></td>
-                                    <td class="text-right metric-orange" id="summaryWongsProfit"><strong>£8,873.50</strong></td>
+                                    <td class="text-right metric-green" id="summaryDailyProfit"><strong>£17,789.00</strong></td>
+                                    <td class="text-right metric-blue" id="summaryGrossProfit"><strong>£17,789.00</strong></td>
+                                    <td class="text-right metric-orange" id="summaryWongsProfit"><strong>£8,894.50</strong></td>
                                 </tr>
                             </tfoot>
                         </table>
@@ -994,10 +996,32 @@
                 { day: 18, date: '26 Nov 2025', rawDate: '2025-11-26', capital: 1000000.2, dailyProfit: 1001, grossProfit: 1001, wongsProfit: 500.5 },
                 { day: 19, date: '27 Nov 2025', rawDate: '2025-11-27', capital: 1000000.2, dailyProfit: 788, grossProfit: 788, wongsProfit: 394 },
                 { day: 20, date: '28 Nov 2025', rawDate: '2025-11-28', capital: 1000000.2, dailyProfit: 877, grossProfit: 877, wongsProfit: 438.5 }
+            ],
+            'Dec 2025': [
+                { day: 1, date: '01 Dec 2025', rawDate: '2025-12-01', capital: 1000000.2, dailyProfit: 800, grossProfit: 800, wongsProfit: 400 },
+                { day: 2, date: '02 Dec 2025', rawDate: '2025-12-02', capital: 1000000.2, dailyProfit: 798, grossProfit: 798, wongsProfit: 399 },
+                { day: 3, date: '03 Dec 2025', rawDate: '2025-12-03', capital: 1000000.2, dailyProfit: 999, grossProfit: 999, wongsProfit: 499.5 },
+                { day: 4, date: '04 Dec 2025', rawDate: '2025-12-04', capital: 1000000.2, dailyProfit: 867, grossProfit: 867, wongsProfit: 433.5 },
+                { day: 5, date: '05 Dec 2025', rawDate: '2025-12-05', capital: 1000000.2, dailyProfit: 756, grossProfit: 756, wongsProfit: 378 },
+                { day: 6, date: '08 Dec 2025', rawDate: '2025-12-08', capital: 1000000.2, dailyProfit: 878, grossProfit: 878, wongsProfit: 439 },
+                { day: 7, date: '09 Dec 2025', rawDate: '2025-12-09', capital: 1000000.2, dailyProfit: 810, grossProfit: 810, wongsProfit: 405 },
+                { day: 8, date: '10 Dec 2025', rawDate: '2025-12-10', capital: 1000000.2, dailyProfit: 922, grossProfit: 922, wongsProfit: 461 },
+                { day: 9, date: '11 Dec 2025', rawDate: '2025-12-11', capital: 1000000.2, dailyProfit: 943, grossProfit: 943, wongsProfit: 471.5 },
+                { day: 10, date: '12 Dec 2025', rawDate: '2025-12-12', capital: 1000000.2, dailyProfit: 965, grossProfit: 965, wongsProfit: 482.5 },
+                { day: 11, date: '13 Dec 2025', rawDate: '2025-12-13', capital: 1000000.2, dailyProfit: 809, grossProfit: 809, wongsProfit: 404.5 },
+                { day: 12, date: '15 Dec 2025', rawDate: '2025-12-15', capital: 1000000.2, dailyProfit: 999, grossProfit: 999, wongsProfit: 499.5 },
+                { day: 13, date: '16 Dec 2025', rawDate: '2025-12-16', capital: 1000000.2, dailyProfit: 999, grossProfit: 999, wongsProfit: 499.5 },
+                { day: 14, date: '17 Dec 2025', rawDate: '2025-12-17', capital: 1000000.2, dailyProfit: 999, grossProfit: 999, wongsProfit: 499.5 },
+                { day: 15, date: '18 Dec 2025', rawDate: '2025-12-18', capital: 1000000.2, dailyProfit: 765, grossProfit: 765, wongsProfit: 382.5 },
+                { day: 16, date: '19 Dec 2025', rawDate: '2025-12-19', capital: 1000000.2, dailyProfit: 876, grossProfit: 876, wongsProfit: 438 },
+                { day: 17, date: '22 Dec 2025', rawDate: '2025-12-22', capital: 1000000.2, dailyProfit: 846, grossProfit: 846, wongsProfit: 423 },
+                { day: 18, date: '23 Dec 2025', rawDate: '2025-12-23', capital: 1000000.2, dailyProfit: 1004, grossProfit: 1004, wongsProfit: 502 },
+                { day: 19, date: '29 Dec 2025', rawDate: '2025-12-29', capital: 1000000.2, dailyProfit: 987, grossProfit: 987, wongsProfit: 493.5 },
+                { day: 20, date: '30 Dec 2025', rawDate: '2025-12-30', capital: 1000000.2, dailyProfit: 767, grossProfit: 767, wongsProfit: 383.5 }
             ]
         };
 
-        let currentPeriod = 'Nov 2025';
+        let currentPeriod = 'Dec 2025';
         let currentData = monthlyData[currentPeriod];
         let chart = null;
 
@@ -1171,7 +1195,7 @@
         function selectPeriodFromDropdown(selectElement) {
             const period = selectElement.value;
             currentPeriod = period;
-            currentData = monthlyData[period] || monthlyData['Nov 2025'];
+            currentData = monthlyData[period] || monthlyData['Dec 2025'];
             
             // Update button states to keep in sync
             document.querySelectorAll('.period-btn').forEach(btn => {
@@ -1193,7 +1217,7 @@
         // Select period from buttons (desktop)
         function selectPeriod(period, element) {
             currentPeriod = period;
-            currentData = monthlyData[period] || monthlyData['Nov 2025'];
+            currentData = monthlyData[period] || monthlyData['Dec 2025'];
             
             // Update period buttons
             document.querySelectorAll('.period-btn').forEach(btn => {

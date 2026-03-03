@@ -514,7 +514,8 @@
                     <button class="period-btn" onclick="selectPeriod('Oct 2025', this)">Oct 2025</button>
                     <button class="period-btn" onclick="selectPeriod('Nov 2025', this)">Nov 2025</button>
                     <button class="period-btn" onclick="selectPeriod('Dec 2025', this)">Dec 2025</button>
-                    <button class="period-btn active" onclick="selectPeriod('Jan 2026', this)">Jan 2026</button>
+                    <button class="period-btn" onclick="selectPeriod('Jan 2026', this)">Jan 2026</button>
+                    <button class="period-btn active" onclick="selectPeriod('Feb 2026', this)">Feb 2026</button>
                 </div>
                 <div class="period-dropdown">
                     <select onchange="selectPeriodFromDropdown(this)" id="periodSelect">
@@ -565,7 +566,7 @@
                         <div class="metric-content">
                             <div class="metric-text">
                                 <p>Total Daily Profit</p>
-                                <p class="metric-blue" id="totalDailyProfit">£17,576.00</p>
+                                <p class="metric-blue" id="totalDailyProfit">£16,853.00</p>
                             </div>
                             <div class="metric-icon icon-blue">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="metric-blue">
@@ -580,7 +581,7 @@
                         <div class="metric-content">
                             <div class="metric-text">
                                 <p>Total Return</p>
-                                <p class="metric-green" id="totalReturn">1.76%</p>
+                                <p class="metric-green" id="totalReturn">1.69%</p>
                             </div>
                             <div class="metric-icon icon-green">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="metric-green">
@@ -595,7 +596,7 @@
                         <div class="metric-content">
                             <div class="metric-text">
                                 <p>Wong's Profit</p>
-                                <p class="metric-orange" id="wongsProfit">£8,788.00</p>
+                                <p class="metric-orange" id="wongsProfit">£8,426.50</p>
                             </div>
                             <div class="metric-icon icon-orange">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="metric-orange">
@@ -610,7 +611,7 @@
                         <div class="metric-content">
                             <div class="metric-text">
                                 <p>Wong's Return</p>
-                                <p class="metric-gray" id="wongsReturn">0.88%</p>
+                                <p class="metric-gray" id="wongsReturn">0.84%</p>
                             </div>
                             <div class="metric-icon icon-gray">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="metric-gray">
@@ -647,7 +648,7 @@
             <div id="table" class="view">
                 <div class="table-container">
                     <div class="table-header">
-                        <h3 class="table-title">Trade Details - <span id="tablePeriod">Jan 2026</span></h3>
+                        <h3 class="table-title">Trade Details - <span id="tablePeriod">Feb 2026</span></h3>
                     </div>
                     <div class="table-wrapper">
                         <table>
@@ -667,9 +668,9 @@
                             <tfoot>
                                 <tr>
                                     <td colspan="3"><strong>Grand Summary</strong></td>
-                                    <td class="text-right metric-green" id="summaryDailyProfit"><strong>£17,576.00</strong></td>
-                                    <td class="text-right metric-blue" id="summaryGrossProfit"><strong>£17,576.00</strong></td>
-                                    <td class="text-right metric-orange" id="summaryWongsProfit"><strong>£8,788.00</strong></td>
+                                    <td class="text-right metric-green" id="summaryDailyProfit"><strong>£16,853.00</strong></td>
+                                    <td class="text-right metric-blue" id="summaryGrossProfit"><strong>£16,853.00</strong></td>
+                                    <td class="text-right metric-orange" id="summaryWongsProfit"><strong>£8,426.50</strong></td>
                                 </tr>
                             </tfoot>
                         </table>
@@ -1042,10 +1043,32 @@
                 { day: 18, date: '28 Jan 2026', rawDate: '2026-01-28', capital: 1000000.2, dailyProfit: 999, grossProfit: 999, wongsProfit: 499.5 },
                 { day: 19, date: '29 Jan 2026', rawDate: '2026-01-29', capital: 1000000.2, dailyProfit: 787, grossProfit: 787, wongsProfit: 393.5 },
                 { day: 20, date: '30 Jan 2026', rawDate: '2026-01-30', capital: 1000000.2, dailyProfit: 712, grossProfit: 712, wongsProfit: 356 }
+            ],
+            'Feb 2026': [
+                { day: 1, date: '02 Feb 2026', rawDate: '2026-02-02', capital: 1000000.2, dailyProfit: 809, grossProfit: 809, wongsProfit: 404.5 },
+                { day: 2, date: '03 Feb 2026', rawDate: '2026-02-03', capital: 1000000.2, dailyProfit: 777, grossProfit: 777, wongsProfit: 388.5 },
+                { day: 3, date: '04 Feb 2026', rawDate: '2026-02-04', capital: 1000000.2, dailyProfit: 762, grossProfit: 762, wongsProfit: 381 },
+                { day: 4, date: '05 Feb 2026', rawDate: '2026-02-05', capital: 1000000.2, dailyProfit: 790, grossProfit: 790, wongsProfit: 395 },
+                { day: 5, date: '06 Feb 2026', rawDate: '2026-02-06', capital: 1000000.2, dailyProfit: 798, grossProfit: 798, wongsProfit: 399 },
+                { day: 6, date: '09 Feb 2026', rawDate: '2026-02-09', capital: 1000000.2, dailyProfit: 897, grossProfit: 897, wongsProfit: 448.5 },
+                { day: 7, date: '10 Feb 2026', rawDate: '2026-02-10', capital: 1000000.2, dailyProfit: 765, grossProfit: 765, wongsProfit: 382.5 },
+                { day: 8, date: '11 Feb 2026', rawDate: '2026-02-11', capital: 1000000.2, dailyProfit: 898, grossProfit: 898, wongsProfit: 449 },
+                { day: 9, date: '12 Feb 2026', rawDate: '2026-02-12', capital: 1000000.2, dailyProfit: 901, grossProfit: 901, wongsProfit: 450.5 },
+                { day: 10, date: '13 Feb 2026', rawDate: '2026-02-13', capital: 1000000.2, dailyProfit: 798, grossProfit: 798, wongsProfit: 399 },
+                { day: 11, date: '16 Feb 2026', rawDate: '2026-02-16', capital: 1000000.2, dailyProfit: 978, grossProfit: 978, wongsProfit: 489 },
+                { day: 12, date: '17 Feb 2026', rawDate: '2026-02-17', capital: 1000000.2, dailyProfit: 876, grossProfit: 876, wongsProfit: 438 },
+                { day: 13, date: '18 Feb 2026', rawDate: '2026-02-18', capital: 1000000.2, dailyProfit: 914, grossProfit: 914, wongsProfit: 457 },
+                { day: 14, date: '19 Feb 2026', rawDate: '2026-02-19', capital: 1000000.2, dailyProfit: 731, grossProfit: 731, wongsProfit: 365.5 },
+                { day: 15, date: '20 Feb 2026', rawDate: '2026-02-20', capital: 1000000.2, dailyProfit: 768, grossProfit: 768, wongsProfit: 384 },
+                { day: 16, date: '23 Feb 2026', rawDate: '2026-02-23', capital: 1000000.2, dailyProfit: 893, grossProfit: 893, wongsProfit: 446.5 },
+                { day: 17, date: '24 Feb 2026', rawDate: '2026-02-24', capital: 1000000.2, dailyProfit: 856, grossProfit: 856, wongsProfit: 428 },
+                { day: 18, date: '25 Feb 2026', rawDate: '2026-02-25', capital: 1000000.2, dailyProfit: 809, grossProfit: 809, wongsProfit: 404.5 },
+                { day: 19, date: '26 Feb 2026', rawDate: '2026-02-26', capital: 1000000.2, dailyProfit: 922, grossProfit: 922, wongsProfit: 461 },
+                { day: 20, date: '27 Feb 2026', rawDate: '2026-02-27', capital: 1000000.2, dailyProfit: 911, grossProfit: 911, wongsProfit: 455.5 }
             ]
         };
 
-        let currentPeriod = 'Jan 2026';
+        let currentPeriod = 'Feb 2026';
         let currentData = monthlyData[currentPeriod];
         let chart = null;
 
@@ -1219,7 +1242,7 @@
         function selectPeriodFromDropdown(selectElement) {
             const period = selectElement.value;
             currentPeriod = period;
-            currentData = monthlyData[period] || monthlyData['Jan 2026'];
+            currentData = monthlyData[period] || monthlyData['Feb 2026'];
             
             // Update button states to keep in sync
             document.querySelectorAll('.period-btn').forEach(btn => {
@@ -1241,7 +1264,7 @@
         // Select period from buttons (desktop)
         function selectPeriod(period, element) {
             currentPeriod = period;
-            currentData = monthlyData[period] || monthlyData['Jan 2026'];
+            currentData = monthlyData[period] || monthlyData['Feb 2026'];
             
             // Update period buttons
             document.querySelectorAll('.period-btn').forEach(btn => {

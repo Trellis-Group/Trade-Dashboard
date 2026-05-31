@@ -517,7 +517,8 @@
                     <button class="period-btn" onclick="selectPeriod('Jan 2026', this)">Jan 2026</button>
                     <button class="period-btn" onclick="selectPeriod('Feb 2026', this)">Feb 2026</button>
                     <button class="period-btn" onclick="selectPeriod('Mar 2026', this)">Mar 2026</button>
-                    <button class="period-btn active" onclick="selectPeriod('Apr 2026', this)">Apr 2026</button>
+                    <button class="period-btn" onclick="selectPeriod('Apr 2026', this)">Apr 2026</button>
+                    <button class="period-btn active" onclick="selectPeriod('May 2026', this)">May 2026</button>
                 </div>
                 <div class="period-dropdown">
                     <select onchange="selectPeriodFromDropdown(this)" id="periodSelect">
@@ -538,7 +539,8 @@
                         <option value="Jan 2026">Jan 2026</option>
                         <option value="Feb 2026">Feb 2026</option>
                         <option value="Mar 2026">Mar 2026</option>
-                        <option value="Apr 2026" selected>Apr 2026</option>
+                        <option value="Apr 2026">Apr 2026</option>
+                        <option value="May 2026" selected>May 2026</option>
                     </select>
                 </div>
             </div>
@@ -571,7 +573,7 @@
                         <div class="metric-content">
                             <div class="metric-text">
                                 <p>Total Daily Profit</p>
-                                <p class="metric-blue" id="totalDailyProfit">£15,469.00</p>
+                                <p class="metric-blue" id="totalDailyProfit">£12,398.00</p>
                             </div>
                             <div class="metric-icon icon-blue">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="metric-blue">
@@ -586,7 +588,7 @@
                         <div class="metric-content">
                             <div class="metric-text">
                                 <p>Total Return</p>
-                                <p class="metric-green" id="totalReturn">1.55%</p>
+                                <p class="metric-green" id="totalReturn">1.24%</p>
                             </div>
                             <div class="metric-icon icon-green">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="metric-green">
@@ -601,7 +603,7 @@
                         <div class="metric-content">
                             <div class="metric-text">
                                 <p>Wong's Profit</p>
-                                <p class="metric-orange" id="wongsProfit">£7,734.50</p>
+                                <p class="metric-orange" id="wongsProfit">£6,199.00</p>
                             </div>
                             <div class="metric-icon icon-orange">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="metric-orange">
@@ -616,7 +618,7 @@
                         <div class="metric-content">
                             <div class="metric-text">
                                 <p>Wong's Return</p>
-                                <p class="metric-gray" id="wongsReturn">0.77%</p>
+                                <p class="metric-gray" id="wongsReturn">0.62%</p>
                             </div>
                             <div class="metric-icon icon-gray">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="metric-gray">
@@ -653,7 +655,7 @@
             <div id="table" class="view">
                 <div class="table-container">
                     <div class="table-header">
-                        <h3 class="table-title">Trade Details - <span id="tablePeriod">Apr 2026</span></h3>
+                        <h3 class="table-title">Trade Details - <span id="tablePeriod">May 2026</span></h3>
                     </div>
                     <div class="table-wrapper">
                         <table>
@@ -673,9 +675,9 @@
                             <tfoot>
                                 <tr>
                                     <td colspan="3"><strong>Grand Summary</strong></td>
-                                    <td class="text-right metric-green" id="summaryDailyProfit"><strong>£15,469.00</strong></td>
-                                    <td class="text-right metric-blue" id="summaryGrossProfit"><strong>£15,469.00</strong></td>
-                                    <td class="text-right metric-orange" id="summaryWongsProfit"><strong>£7,734.50</strong></td>
+                                    <td class="text-right metric-green" id="summaryDailyProfit"><strong>£12,398.00</strong></td>
+                                    <td class="text-right metric-blue" id="summaryGrossProfit"><strong>£12,398.00</strong></td>
+                                    <td class="text-right metric-orange" id="summaryWongsProfit"><strong>£6,199.00</strong></td>
                                 </tr>
                             </tfoot>
                         </table>
@@ -1116,10 +1118,26 @@
                 { day: 18, date: '28 Apr 2026', rawDate: '2026-04-28', capital: 1000000.2, dailyProfit: 688, grossProfit: 688, wongsProfit: 344 },
                 { day: 19, date: '29 Apr 2026', rawDate: '2026-04-29', capital: 1000000.2, dailyProfit: 711, grossProfit: 711, wongsProfit: 355.5 },
                 { day: 20, date: '30 Apr 2026', rawDate: '2026-04-30', capital: 1000000.2, dailyProfit: 699, grossProfit: 699, wongsProfit: 349.5 }
+            ],
+            'May 2026': [
+                { day: 1, date: '05 May 2026', rawDate: '2026-05-05', capital: 1000000.2, dailyProfit: 900, grossProfit: 900, wongsProfit: 450 },
+                { day: 2, date: '06 May 2026', rawDate: '2026-05-06', capital: 1000000.2, dailyProfit: 878, grossProfit: 878, wongsProfit: 439 },
+                { day: 3, date: '07 May 2026', rawDate: '2026-05-07', capital: 1000000.2, dailyProfit: 932, grossProfit: 932, wongsProfit: 466 },
+                { day: 4, date: '08 May 2026', rawDate: '2026-05-08', capital: 1000000.2, dailyProfit: 877, grossProfit: 877, wongsProfit: 438.5 },
+                { day: 5, date: '11 May 2026', rawDate: '2026-05-11', capital: 1000000.2, dailyProfit: 812, grossProfit: 812, wongsProfit: 406 },
+                { day: 6, date: '12 May 2026', rawDate: '2026-05-12', capital: 1000000.2, dailyProfit: 798, grossProfit: 798, wongsProfit: 399 },
+                { day: 7, date: '13 May 2026', rawDate: '2026-05-13', capital: 1000000.2, dailyProfit: 865, grossProfit: 865, wongsProfit: 432.5 },
+                { day: 8, date: '14 May 2026', rawDate: '2026-05-14', capital: 1000000.2, dailyProfit: 988, grossProfit: 988, wongsProfit: 494 },
+                { day: 9, date: '15 May 2026', rawDate: '2026-05-15', capital: 1000000.2, dailyProfit: 954, grossProfit: 954, wongsProfit: 477 },
+                { day: 10, date: '18 May 2026', rawDate: '2026-05-18', capital: 1000000.2, dailyProfit: 934, grossProfit: 934, wongsProfit: 467 },
+                { day: 11, date: '19 May 2026', rawDate: '2026-05-19', capital: 1000000.2, dailyProfit: 877, grossProfit: 877, wongsProfit: 438.5 },
+                { day: 12, date: '20 May 2026', rawDate: '2026-05-20', capital: 1000000.2, dailyProfit: 804, grossProfit: 804, wongsProfit: 402 },
+                { day: 13, date: '21 May 2026', rawDate: '2026-05-21', capital: 1000000.2, dailyProfit: 877, grossProfit: 877, wongsProfit: 438.5 },
+                { day: 14, date: '22 May 2026', rawDate: '2026-05-22', capital: 1000000.2, dailyProfit: 902, grossProfit: 902, wongsProfit: 451 }
             ]
         };
 
-        let currentPeriod = 'Apr 2026';
+        let currentPeriod = 'May 2026';
         let currentData = monthlyData[currentPeriod];
         let chart = null;
 
@@ -1293,7 +1311,7 @@
         function selectPeriodFromDropdown(selectElement) {
             const period = selectElement.value;
             currentPeriod = period;
-            currentData = monthlyData[period] || monthlyData['Apr 2026'];
+            currentData = monthlyData[period] || monthlyData['May 2026'];
             
             // Update button states to keep in sync
             document.querySelectorAll('.period-btn').forEach(btn => {
@@ -1315,7 +1333,7 @@
         // Select period from buttons (desktop)
         function selectPeriod(period, element) {
             currentPeriod = period;
-            currentData = monthlyData[period] || monthlyData['Apr 2026'];
+            currentData = monthlyData[period] || monthlyData['May 2026'];
             
             // Update period buttons
             document.querySelectorAll('.period-btn').forEach(btn => {
